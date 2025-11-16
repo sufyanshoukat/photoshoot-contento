@@ -2,12 +2,14 @@ import 'package:contento/constants/app_colors.dart';
 import 'package:contento/constants/app_images.dart';
 import 'package:contento/constants/app_sizes.dart';
 import 'package:contento/constants/app_styling.dart';
+import 'package:contento/controller/auth_controller.dart';
 import 'package:contento/view/widget/common_image_view_widget.dart';
 import 'package:contento/view/widget/custom_textfield.dart';
 import 'package:contento/view/widget/general_appbar.dart';
 import 'package:contento/view/widget/my_button.dart';
 import 'package:contento/view/widget/my_text_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class UpdatePasswordPage extends StatefulWidget {
   const UpdatePasswordPage({super.key});
@@ -17,7 +19,11 @@ class UpdatePasswordPage extends StatefulWidget {
 }
 
 class _UpdatePasswordPageState extends State<UpdatePasswordPage> {
-  bool isObsecureText = false;
+  bool isObsecureText1 = false;
+  bool isObsecureText2 = false;
+  bool isObsecureText3 = false;
+  final AuthController authController = Get.find<AuthController>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,50 +36,51 @@ class _UpdatePasswordPageState extends State<UpdatePasswordPage> {
               title: 'Change Password',
             ),
             SizedBox(height: 11),
-
             SizedBox(height: 16),
-
             Padding(
               padding: AppSizes.HORIZONTAL,
               child: Column(
                 children: [
                   PasswordTextField(
+                    controller: authController.oldPasswordController,
                     lebal: "Enter Old Password",
-                    isObsecureText: isObsecureText,
+                    isObsecureText: isObsecureText1,
                     onTap: () {
-                      isObsecureText
-                          ? isObsecureText = false
-                          : isObsecureText = true;
+                      isObsecureText1 = !isObsecureText1;
                       setState(() {});
                     },
                   ),
                   PasswordTextField(
+                    controller: authController.newPasswordController,
                     lebal: "Enter New Password",
-                    isObsecureText: isObsecureText,
+                    isObsecureText: isObsecureText2,
                     onTap: () {
-                      isObsecureText
-                          ? isObsecureText = false
-                          : isObsecureText = true;
+                      isObsecureText2 = !isObsecureText2;
                       setState(() {});
                     },
                   ),
                   PasswordTextField(
+                    controller: authController.confirmPasswordController,
                     lebal: "Confirm New Password",
-                    isObsecureText: isObsecureText,
+                    isObsecureText: isObsecureText3,
                     onTap: () {
-                      isObsecureText
-                          ? isObsecureText = false
-                          : isObsecureText = true;
+                      isObsecureText3 = !isObsecureText3;
                       setState(() {});
                     },
                   ),
-
-                  MyButton(
-                    mTop: 32,
-                    onTap: () {},
-                    radius: 10,
-                    buttonText: "Save",
-                  ),
+                  Obx(() => authController.isLoading.value
+                      ? Padding(
+                          padding: const EdgeInsets.only(top: 32),
+                          child: CircularProgressIndicator(),
+                        )
+                      : MyButton(
+                          mTop: 32,
+                          onTap: () {
+                            authController.changePassword();
+                          },
+                          radius: 10,
+                          buttonText: "Save",
+                        )),
                 ],
               ),
             ),
@@ -119,7 +126,6 @@ class SettingButton extends StatelessWidget {
               color: haveArrow ? kBlackColor : kWhiteColor,
             ),
           ),
-
           Visibility(
             visible: haveArrow,
             child: Icon(

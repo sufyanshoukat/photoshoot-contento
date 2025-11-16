@@ -1,3 +1,4 @@
+import 'package:contento/bindings/bindings.dart';
 import 'package:contento/config/theme/light_theme.dart';
 import 'package:contento/firebase_options.dart';
 import 'package:contento/view/screens/launch/splash_screen.dart';
@@ -28,8 +29,7 @@ class MyApp extends StatelessWidget {
       title: 'Contento',
       theme: lightTheme,
       themeMode: ThemeMode.light,
-      // initialRoute: AppLinks.splash_screen,
-      // getPages: AppRoutes.pages,
+      initialBinding: AuthBinding(),
       home: SplashScreen(),
     );
   }

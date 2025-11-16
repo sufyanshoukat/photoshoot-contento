@@ -2,6 +2,7 @@ import 'package:contento/constants/app_colors.dart';
 import 'package:contento/constants/app_images.dart';
 import 'package:contento/constants/app_sizes.dart';
 import 'package:contento/constants/app_styling.dart';
+import 'package:contento/controller/auth_controller.dart';
 import 'package:contento/view/widget/common_image_view_widget.dart';
 import 'package:contento/view/widget/general_appbar.dart';
 import 'package:contento/view/widget/my_text_widget.dart';
@@ -16,12 +17,16 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final AuthController authController = Get.find<AuthController>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
         children: [
-          HomeAppBar(name: "Orhan Shoukat"),
+          Obx(() => HomeAppBar(
+                name: authController.currentUser.value?.fullName ?? "User",
+              )),
 
           // ------
           Expanded(
@@ -88,13 +93,12 @@ class MyBtn extends StatelessWidget {
       padding: EdgeInsets.only(left: 30, right: 20),
       height: 60,
       width: Get.width,
-      decoration:
-          (isGradientStyle)
-              ? AppStyling().gradientStyle1()
-              : AppStyling().myDecoration(
-                borderColor: kTransperentColor,
-                color: kBlackColor.withValues(alpha: 0.1),
-              ),
+      decoration: (isGradientStyle)
+          ? AppStyling().gradientStyle1()
+          : AppStyling().myDecoration(
+              borderColor: kTransperentColor,
+              color: kBlackColor.withValues(alpha: 0.1),
+            ),
       child: InkWell(
         onTap: onTap,
         child: Row(
@@ -131,7 +135,6 @@ class MemberShipCard extends StatelessWidget {
           children: [
             CommonImageView(svgPath: Assets.imagesHomeA),
             SizedBox(width: 10),
-
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,

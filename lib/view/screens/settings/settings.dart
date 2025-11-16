@@ -2,7 +2,7 @@ import 'package:contento/constants/app_colors.dart';
 import 'package:contento/constants/app_images.dart';
 import 'package:contento/constants/app_sizes.dart';
 import 'package:contento/constants/app_styling.dart';
-import 'package:contento/view/screens/auth/login.dart';
+import 'package:contento/controller/auth_controller.dart';
 import 'package:contento/view/screens/membership/manage_membership.dart';
 import 'package:contento/view/screens/settings/help.dart';
 import 'package:contento/view/screens/settings/privacy_policy.dart';
@@ -24,6 +24,8 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
+  final AuthController authController = Get.find<AuthController>();
+
   List<ItemModel> items = [
     ItemModel(icon: Assets.imagesSA, title: "Change Password"),
     ItemModel(icon: Assets.imagesSB, title: "Manage Membership"),
@@ -45,7 +47,6 @@ class _SettingsPageState extends State<SettingsPage> {
               title: 'Profile',
             ),
             SizedBox(height: 11),
-
             Align(
               alignment: Alignment.center,
               child: Stack(
@@ -65,7 +66,6 @@ class _SettingsPageState extends State<SettingsPage> {
                       ),
                     ),
                   ),
-
                   Positioned(
                     bottom: 0,
                     right: 0,
@@ -74,62 +74,73 @@ class _SettingsPageState extends State<SettingsPage> {
                 ],
               ),
             ),
-
             SizedBox(height: 5),
-
-            Align(
-              alignment: Alignment.center,
-              child: MyText(
-                text: "Lois Becket",
-                size: 15,
-                weight: FontWeight.w500,
-              ),
-            ),
-            Align(
-              alignment: Alignment.center,
-              child: MyText(
-                paddingTop: 2,
-                text: "Loisbecket@gmail.com",
-                size: 12,
-                weight: FontWeight.w400,
-              ),
-            ),
-
+            Obx(() => Align(
+                  alignment: Alignment.center,
+                  child: MyText(
+                    text: authController.currentUser.value?.fullName ??
+                        "Loading...",
+                    size: 15,
+                    weight: FontWeight.w500,
+                  ),
+                )),
+            Obx(() => Align(
+                  alignment: Alignment.center,
+                  child: MyText(
+                    paddingTop: 2,
+                    text: authController.currentUser.value?.email ?? "",
+                    size: 12,
+                    weight: FontWeight.w400,
+                  ),
+                )),
             SizedBox(height: 17),
-
             Padding(
               padding: AppSizes.HORIZONTAL,
-              child: Column(
-                children: List.generate(items.length, (index) {
-                  return SettingButton(
-                    icon: items[index].icon,
-                    title: items[index].title,
-                    haveArrow: (index == 5) ? false : true,
-                    onTap: () {
-                      switch (index) {
-                        case 0:
-                          Get.to(() => UpdatePasswordPage());
-                          break;
-                        case 1:
-                          Get.to(() => ManageMemberShipPage());
-                          break;
-                        case 2:
-                          Get.to(() => TermsAndConditionPage());
-                          break;
-                        case 3:
-                          Get.to(() => PrivacyPolicyPage());
-                          break;
-                        case 4:
-                          Get.to(() => HelpPage());
-                          break;
-                        default:
-                          Get.bottomSheet(LogoutBSheet());
-                          break;
-                      }
-                    },
-                  );
-                }),
-              ),
+              child: Obx(() {
+                // Filter out Change Password option for Google users
+                List<ItemModel> filteredItems =
+                    authController.currentUser.value?.authType == 'GOOGLE'
+                        ? items
+                            .where((item) => item.title != "Change Password")
+                            .toList()
+                        : items;
+
+                return Column(
+                  children: List.generate(filteredItems.length, (index) {
+                    return SettingButton(
+                      icon: filteredItems[index].icon,
+                      title: filteredItems[index].title,
+                      haveArrow: (filteredItems[index].title == "Log Out")
+                          ? false
+                          : true,
+                      onTap: () {
+                        // Adjust the switch statement based on the filtered list
+                        String title = filteredItems[index].title;
+                        switch (title) {
+                          case "Change Password":
+                            Get.to(() => UpdatePasswordPage());
+                            break;
+                          case "Manage Membership":
+                            Get.to(() => ManageMemberShipPage());
+                            break;
+                          case "Terms & Conditions":
+                            Get.to(() => TermsAndConditionPage());
+                            break;
+                          case "Privacy Policy":
+                            Get.to(() => PrivacyPolicyPage());
+                            break;
+                          case "Help Center":
+                            Get.to(() => HelpPage());
+                            break;
+                          default:
+                            Get.bottomSheet(LogoutBSheet());
+                            break;
+                        }
+                      },
+                    );
+                  }),
+                );
+              }),
             ),
           ],
         ),
@@ -143,6 +154,8 @@ class LogoutBSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final AuthController authController = Get.find<AuthController>();
+
     return Container(
       padding: AppSizes.DEFAULT,
       decoration: AppStyling().allFourSideRaius(
@@ -171,7 +184,6 @@ class LogoutBSheet extends StatelessWidget {
             weight: FontWeight.w500,
             color: kWhiteColor,
           ),
-
           Row(
             children: [
               Expanded(
@@ -190,7 +202,7 @@ class LogoutBSheet extends StatelessWidget {
               Expanded(
                 child: MyButton(
                   onTap: () {
-                    Get.off(() => LoginPage());
+                    authController.logout();
                   },
                   buttonText: "Yes, Logout",
                   fontColor: kWhiteColor,
@@ -245,7 +257,6 @@ class SettingButton extends StatelessWidget {
                 color: haveArrow ? kBlackColor : kWhiteColor,
               ),
             ),
-
             Visibility(
               visible: haveArrow,
               child: Icon(
