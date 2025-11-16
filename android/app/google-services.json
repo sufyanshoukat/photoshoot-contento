@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "705498422898",
+    "project_id": "photoshoot-contento",
+    "storage_bucket": "photoshoot-contento.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:705498422898:android:3025ea7fae313cf1016ceb",
+        "android_client_info": {
+          "package_name": "com.example.contento"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyArBovC23h4wBbo_Z42fp6J704aoIroC3c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
