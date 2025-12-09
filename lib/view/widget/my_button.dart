@@ -75,11 +75,11 @@ class MyButton extends StatelessWidget {
             children: [
               (haveIcon == true)
                   ? CommonImageView(
-                    svgPath: svgIcon,
-                    //svgIconColor: svgIconColor,
-                    // height: iconSize,
-                    width: iconSize,
-                  )
+                      svgPath: svgIcon,
+                      //svgIconColor: svgIconColor,
+                      // height: iconSize,
+                      width: iconSize,
+                    )
                   : SizedBox(),
               MyText(
                 paddingLeft: (haveIcon == true) ? 10 : 0,
@@ -117,13 +117,11 @@ class SocialButton extends StatelessWidget {
       ),
       child: Material(
         color: kTransperentColor,
-
         child: InkWell(
           onTap: onTap,
           splashColor: kSecondaryColor.withValues(alpha: 0.2),
           radius: 50,
           borderRadius: BorderRadius.circular(12),
-
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [

@@ -27,7 +27,7 @@ class SubscriptionController extends GetxController {
   Future<void> getCurrentSubscription(String userId) async {
     try {
       isLoading.value = true;
-      
+
       // Query for active subscription
       QuerySnapshot querySnapshot = await FirebaseFirestore.instance
           .collection('subscriptions')
@@ -39,17 +39,14 @@ class SubscriptionController extends GetxController {
 
       if (querySnapshot.docs.isNotEmpty) {
         currentSubscription.value = SubscriptionModel.fromJson(
-          querySnapshot.docs.first.data() as Map<String, dynamic>
-        );
+            querySnapshot.docs.first.data() as Map<String, dynamic>);
       } else {
         currentSubscription.value = null;
       }
     } catch (e) {
       print("Error fetching subscription: $e");
       CustomSnackBars.instance.showFailureSnackbar(
-        title: "Error", 
-        message: "Failed to load subscription details"
-      );
+          title: "Error", message: "Failed to load subscription details");
     } finally {
       isLoading.value = false;
     }
@@ -65,7 +62,8 @@ class SubscriptionController extends GetxController {
           .get();
 
       subscriptionHistory.value = querySnapshot.docs
-          .map((doc) => SubscriptionModel.fromJson(doc.data() as Map<String, dynamic>))
+          .map((doc) =>
+              SubscriptionModel.fromJson(doc.data() as Map<String, dynamic>))
           .toList();
     } catch (e) {
       print("Error fetching subscription history: $e");
@@ -83,10 +81,8 @@ class SubscriptionController extends GetxController {
     try {
       isLoading.value = true;
 
-      String subscriptionId = FirebaseFirestore.instance
-          .collection('subscriptions')
-          .doc()
-          .id;
+      String subscriptionId =
+          FirebaseFirestore.instance.collection('subscriptions').doc().id;
 
       DateTime now = DateTime.now();
       DateTime endDate = now.add(duration);
@@ -118,19 +114,15 @@ class SubscriptionController extends GetxController {
       );
 
       currentSubscription.value = newSubscription;
-      
+
       CustomSnackBars.instance.showSuccessSnackbar(
-        title: "Success", 
-        message: "Subscription activated successfully!"
-      );
-      
+          title: "Success", message: "Subscription activated successfully!");
+
       return true;
     } catch (e) {
       print("Error creating subscription: $e");
       CustomSnackBars.instance.showFailureSnackbar(
-        title: "Error", 
-        message: "Failed to create subscription"
-      );
+          title: "Error", message: "Failed to create subscription");
       return false;
     } finally {
       isLoading.value = false;
@@ -142,30 +134,30 @@ class SubscriptionController extends GetxController {
     try {
       if (currentSubscription.value == null) {
         CustomSnackBars.instance.showFailureSnackbar(
-          title: "No Subscription", 
-          message: "Please purchase a subscription first"
-        );
+            title: "No Subscription",
+            message: "Please purchase a subscription first");
         return false;
       }
 
       if (currentSubscription.value!.remainingCredits <= 0) {
         CustomSnackBars.instance.showFailureSnackbar(
-          title: "No Credits", 
-          message: "You have no remaining credits. Please renew your subscription."
-        );
+            title: "No Credits",
+            message:
+                "You have no remaining credits. Please renew your subscription.");
         return false;
       }
 
       if (!currentSubscription.value!.isActive) {
         CustomSnackBars.instance.showFailureSnackbar(
-          title: "Subscription Expired", 
-          message: "Your subscription has expired. Please renew to continue."
-        );
+            title: "Subscription Expired",
+            message:
+                "Your subscription has expired. Please renew to continue.");
         return false;
       }
 
       // Update used credits
-      SubscriptionModel updatedSubscription = currentSubscription.value!.copyWith(
+      SubscriptionModel updatedSubscription =
+          currentSubscription.value!.copyWith(
         usedCredits: currentSubscription.value!.usedCredits + 1,
         updatedAt: DateTime.now(),
       );
@@ -177,14 +169,12 @@ class SubscriptionController extends GetxController {
       );
 
       currentSubscription.value = updatedSubscription;
-      
+
       return true;
     } catch (e) {
       print("Error using credit: $e");
-      CustomSnackBars.instance.showFailureSnackbar(
-        title: "Error", 
-        message: "Failed to use credit"
-      );
+      CustomSnackBars.instance
+          .showFailureSnackbar(title: "Error", message: "Failed to use credit");
       return false;
     }
   }
@@ -193,8 +183,9 @@ class SubscriptionController extends GetxController {
   Future<bool> cancelSubscription(String subscriptionId) async {
     try {
       if (currentSubscription.value == null) return false;
-      
-      SubscriptionModel updatedSubscription = currentSubscription.value!.copyWith(
+
+      SubscriptionModel updatedSubscription =
+          currentSubscription.value!.copyWith(
         status: SubscriptionStatus.cancelled,
         updatedAt: DateTime.now(),
       );
@@ -206,19 +197,15 @@ class SubscriptionController extends GetxController {
       );
 
       currentSubscription.value = updatedSubscription;
-      
+
       CustomSnackBars.instance.showSuccessSnackbar(
-        title: "Success", 
-        message: "Subscription cancelled successfully"
-      );
-      
+          title: "Success", message: "Subscription cancelled successfully");
+
       return true;
     } catch (e) {
       print("Error cancelling subscription: $e");
       CustomSnackBars.instance.showFailureSnackbar(
-        title: "Error", 
-        message: "Failed to cancel subscription"
-      );
+          title: "Error", message: "Failed to cancel subscription");
       return false;
     }
   }
@@ -263,19 +250,19 @@ class SubscriptionController extends GetxController {
   // Get days until expiration
   int get daysUntilExpiration {
     if (currentSubscription.value == null) return 0;
-    
+
     DateTime now = DateTime.now();
     DateTime expiry = currentSubscription.value!.endDate;
-    
+
     if (expiry.isBefore(now)) return 0;
-    
+
     return expiry.difference(now).inDays;
   }
 
   // Format expiry date
   String get formattedExpiryDate {
     if (currentSubscription.value == null) return '';
-    
+
     DateTime expiry = currentSubscription.value!.endDate;
     return "${expiry.day.toString().padLeft(2, '0')}-${expiry.month.toString().padLeft(2, '0')}-${expiry.year}";
   }

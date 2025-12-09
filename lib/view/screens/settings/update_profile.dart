@@ -30,7 +30,6 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
               subTitle: 'Complete your profile details.',
             ),
             SizedBox(height: 11),
-
             Align(
               alignment: Alignment.center,
               child: Stack(
@@ -54,9 +53,7 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
                 ],
               ),
             ),
-
             SizedBox(height: 16),
-
             Padding(
               padding: AppSizes.HORIZONTAL,
               child: Column(
@@ -72,7 +69,6 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
                         ),
                       ),
                       SizedBox(width: 15),
-
                       Expanded(
                         child: CustomTextField(
                           haveTitleText: true,
@@ -159,7 +155,6 @@ class SettingButton extends StatelessWidget {
               color: haveArrow ? kBlackColor : kWhiteColor,
             ),
           ),
-
           Visibility(
             visible: haveArrow,
             child: Icon(

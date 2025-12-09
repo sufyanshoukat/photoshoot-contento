@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:contento/constants/firebase_collections.dart';
 import 'package:contento/models/booking_model.dart';
 import 'package:contento/services/firebase_crud.dart';
+import 'package:contento/services/emailjs_service.dart';
 import 'package:contento/utils/snackbars.dart';
 import 'package:contento/controller/subscription_controller.dart';
 import 'package:contento/controller/auth_controller.dart';
@@ -110,6 +111,10 @@ class BookingController extends GetxController {
 
       if (success) {
         userBookings.insert(0, newBooking);
+
+        // Send email notification to client
+        _sendBookingNotificationEmail(newBooking);
+
         _clearBookingForm();
 
         CustomSnackBars.instance.showSuccessSnackbar(
@@ -308,5 +313,45 @@ class BookingController extends GetxController {
   // Format booking date
   String formatBookingDate(DateTime date) {
     return "${date.day.toString().padLeft(2, '0')}/${date.month.toString().padLeft(2, '0')}/${date.year}";
+  }
+
+  // Send booking notification email
+  Future<void> _sendBookingNotificationEmail(BookingModel booking) async {
+    try {
+      // Get user information
+      final user = authController.currentUser.value;
+      if (user == null) {
+        print('Cannot send email: User not found');
+        return;
+      }
+
+      // Get location information
+      final location = availableLocations.firstWhereOrNull(
+        (loc) => loc.id == booking.locationId,
+      );
+
+      if (location == null) {
+        print('Cannot send email: Location not found');
+        return;
+      }
+
+      // Send email notification
+      final bool emailSent =
+          await EmailJSService.instance.sendBookingNotification(
+        booking: booking,
+        user: user,
+        locationName: location.name,
+        locationAddress: location.address,
+      );
+
+      if (emailSent) {
+        print('✅ Booking notification email sent successfully');
+      } else {
+        print('⚠️ Failed to send booking notification email');
+      }
+    } catch (e) {
+      print('❌ Error in _sendBookingNotificationEmail: $e');
+      // Don't throw error - email failure shouldn't prevent booking
+    }
   }
 }

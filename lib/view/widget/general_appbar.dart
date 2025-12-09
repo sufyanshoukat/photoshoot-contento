@@ -40,7 +40,6 @@ class LoginAppBar extends StatelessWidget {
                 weight: FontWeight.w500,
                 color: kWhiteColor,
               ),
-
               MyText(
                 paddingLeft: 5,
                 text: "Sign Up",
@@ -99,7 +98,6 @@ class RegisterAppBar extends StatelessWidget {
                 weight: FontWeight.w500,
                 color: kWhiteColor,
               ),
-
               MyText(
                 paddingLeft: 5,
                 text: "Sign in",
@@ -183,14 +181,14 @@ class GeneralAppBar extends StatelessWidget {
           // Logo
           (isBackButton)
               ? MyRoundButton(
-                onTap: () {
-                  Get.close(1);
-                },
-                child: CommonImageView(
-                  imagePath: Assets.imagesBackArrowIcon,
-                  height: 12,
-                ),
-              )
+                  onTap: () {
+                    Get.close(1);
+                  },
+                  child: CommonImageView(
+                    imagePath: Assets.imagesBackArrowIcon,
+                    height: 12,
+                  ),
+                )
               : SizedBox(height: 20, width: 20),
 
           // Text
@@ -205,11 +203,11 @@ class GeneralAppBar extends StatelessWidget {
           (subTitle == null)
               ? SizedBox.shrink()
               : MyText(
-                text: "$subTitle",
-                size: 15,
-                weight: FontWeight.w500,
-                color: kWhiteColor,
-              ),
+                  text: "$subTitle",
+                  size: 15,
+                  weight: FontWeight.w500,
+                  color: kWhiteColor,
+                ),
         ],
       ),
     );

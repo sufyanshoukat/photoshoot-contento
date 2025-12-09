@@ -491,13 +491,12 @@ class FirebaseCRUDService {
   //   }
 }
 
-  // Stream<QuerySnapshot<Map<String, dynamic>>> streamNotifications(userId) {
-  //   return FirebaseFirestore.instance
-  //       .collection('notificationCollection')
-  //       .where(Filter.and(Filter('sentTo', isEqualTo: userId),
-  //           Filter('type', isNotEqualTo: AppStrings.notificationMessage)))
-  //       // .where('sentTo', isEqualTo: userId).where('type',isNotEqualTo: AppStrings.notificationMessage)
-  //       .orderBy('time', descending: true)
-  //       .snapshots();
-  // }
-
+// Stream<QuerySnapshot<Map<String, dynamic>>> streamNotifications(userId) {
+//   return FirebaseFirestore.instance
+//       .collection('notificationCollection')
+//       .where(Filter.and(Filter('sentTo', isEqualTo: userId),
+//           Filter('type', isNotEqualTo: AppStrings.notificationMessage)))
+//       // .where('sentTo', isEqualTo: userId).where('type',isNotEqualTo: AppStrings.notificationMessage)
+//       .orderBy('time', descending: true)
+//       .snapshots();
+// }

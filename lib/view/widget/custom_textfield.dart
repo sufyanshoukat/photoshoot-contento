@@ -109,12 +109,12 @@ class CustomTextField extends StatelessWidget {
         children: [
           (haveTitleText == true)
               ? MyText(
-                paddingBottom: 7,
-                text: labelText ?? "lebel Text Here",
-                size: 12,
-                weight: FontWeight.w500,
-                color: lableColor,
-              )
+                  paddingBottom: 7,
+                  text: labelText ?? "lebel Text Here",
+                  size: 12,
+                  weight: FontWeight.w500,
+                  color: lableColor,
+                )
               : SizedBox(),
           Container(
             height: height,
@@ -130,20 +130,18 @@ class CustomTextField extends StatelessWidget {
               //onChanged: onChanged,
               style: TextStyle(color: txtColor, fontSize: 13),
               decoration: InputDecoration(
-                prefixIcon:
-                    (havePrefixIcon == false)
-                        ? null
-                        : Container(
-                          width: 40,
-                          child: Center(child: preffixWidget),
-                        ),
-                suffixIcon:
-                    (haveSuffixIcon == false)
-                        ? null
-                        : InkWell(
-                          onTap: onSuffixTap,
-                          child: Container(child: suffixWidget),
-                        ),
+                prefixIcon: (havePrefixIcon == false)
+                    ? null
+                    : Container(
+                        width: 40,
+                        child: Center(child: preffixWidget),
+                      ),
+                suffixIcon: (haveSuffixIcon == false)
+                    ? null
+                    : InkWell(
+                        onTap: onSuffixTap,
+                        child: Container(child: suffixWidget),
+                      ),
                 filled: filled,
                 fillColor: backgroundColor,
                 hintText: hintText,
@@ -224,21 +222,19 @@ class PasswordTextField extends StatelessWidget {
       labelText: lebal ?? "Password",
       hintText: hint ?? "*******",
       onSuffixTap: onTap,
-
       haveSuffixIcon: true,
-      suffixWidget:
-          isObsecureText
-              ? SizedBox(
-                width: 50,
-                height: 50,
-                child: Center(
-                  child: CommonImageView(
-                    svgPath: Assets.imagesEyeCloseIcon,
-                    height: 20,
-                  ),
+      suffixWidget: isObsecureText
+          ? SizedBox(
+              width: 50,
+              height: 50,
+              child: Center(
+                child: CommonImageView(
+                  svgPath: Assets.imagesEyeCloseIcon,
+                  height: 20,
                 ),
-              )
-              : Icon(Icons.remove_red_eye, size: 20, color: kSecondaryColor),
+              ),
+            )
+          : Icon(Icons.remove_red_eye, size: 20, color: kSecondaryColor),
     );
   }
 }

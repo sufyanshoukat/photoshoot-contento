@@ -63,28 +63,26 @@ class CommonImageView extends StatelessWidget {
           width: width,
           fit: fit,
           imageUrl: url!,
-          placeholder:
-              (context, url) => Container(
-                height: 23,
-                width: 23,
-                child: Center(
-                  child: SizedBox(
-                    height: 20,
-                    width: 20,
-                    child: CircularProgressIndicator(
-                      color: kSecondaryColor,
-                      backgroundColor: Colors.grey.shade100,
-                    ),
-                  ),
+          placeholder: (context, url) => Container(
+            height: 23,
+            width: 23,
+            child: Center(
+              child: SizedBox(
+                height: 20,
+                width: 20,
+                child: CircularProgressIndicator(
+                  color: kSecondaryColor,
+                  backgroundColor: Colors.grey.shade100,
                 ),
               ),
-          errorWidget:
-              (context, url, error) => Image.asset(
-                placeHolder,
-                height: height,
-                width: width,
-                fit: fit,
-              ),
+            ),
+          ),
+          errorWidget: (context, url, error) => Image.asset(
+            placeHolder,
+            height: height,
+            width: width,
+            fit: fit,
+          ),
         ),
       );
     } else if (imagePath != null && imagePath!.isNotEmpty) {

@@ -77,17 +77,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         currentPage = value;
                       });
                     },
-                    itemBuilder:
-                        (context, index) => OnboardContent(
-                          // illustration: demoData[index]["illustration"],
-                          title: demoData[index]["title"],
-                          text: demoData[index]["text"],
-                        ),
+                    itemBuilder: (context, index) => OnboardContent(
+                      // illustration: demoData[index]["illustration"],
+                      title: demoData[index]["title"],
+                      text: demoData[index]["text"],
+                    ),
                   ),
                 ),
-
                 const Spacer(flex: 2),
-
                 Align(
                   alignment: Alignment.center,
                   child: MyButton(
@@ -102,7 +99,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     buttonText: currentPage < 2 ? "Next" : "Get Started",
                   ),
                 ),
-
                 const Spacer(flex: 2),
               ],
             ),

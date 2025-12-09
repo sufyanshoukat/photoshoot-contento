@@ -25,9 +25,7 @@ class _PrivacyPolicyPageState extends State<PrivacyPolicyPage> {
               title: 'Privacy Policy',
             ),
             SizedBox(height: 11),
-
             SizedBox(height: 16),
-
             Padding(
               padding: AppSizes.HORIZONTAL,
               child: Column(

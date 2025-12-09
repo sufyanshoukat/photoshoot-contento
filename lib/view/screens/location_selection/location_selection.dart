@@ -31,7 +31,6 @@ class _LocationSelectionPageState extends State<LocationSelectionPage> {
               title: 'Choose Your Location',
               subTitle: "Select a photoshoot spot for this week",
             ),
-
             Padding(
               padding: AppSizes.HORIZONTAL,
               child: Column(
@@ -45,36 +44,31 @@ class _LocationSelectionPageState extends State<LocationSelectionPage> {
                         CommonImageView(
                           height: 90,
                           radius: 10,
-                          imagePath:
-                              (index.isEven)
-                                  ? Assets.imagesBeachPhoto
-                                  : Assets.imagesStudioPhoto,
+                          imagePath: (index.isEven)
+                              ? Assets.imagesBeachPhoto
+                              : Assets.imagesStudioPhoto,
                         ),
                         SizedBox(width: 20),
-
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             MyText(
-                              text:
-                                  (index.isEven)
-                                      ? "Beachside Park"
-                                      : "Book Photoshoot",
+                              text: (index.isEven)
+                                  ? "Beachside Park"
+                                  : "Book Photoshoot",
                               size: 18,
                               weight: FontWeight.w400,
                               color: kWhiteColor,
                             ),
                             MyText(
                               paddingBottom: 10,
-                              text:
-                                  (index.isEven)
-                                      ? "Indoor. Studio Lightning"
-                                      : "Indoor Lightning",
+                              text: (index.isEven)
+                                  ? "Indoor. Studio Lightning"
+                                  : "Indoor Lightning",
                               size: 14,
                               weight: FontWeight.w600,
                               color: kWhiteColor,
                             ),
-
                             SizedBox(
                               width: 140,
                               child: MyButton(
@@ -98,7 +92,6 @@ class _LocationSelectionPageState extends State<LocationSelectionPage> {
                 }),
               ),
             ),
-
             SizedBox(height: 40),
           ],
         ),

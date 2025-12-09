@@ -33,12 +33,12 @@ class MyDropDown extends StatelessWidget {
         children: [
           title != null
               ? MyText(
-                text: '$title',
-                size: 12,
-                weight: titleFontWeight,
-                paddingBottom: 8,
-                color: kBlackColor,
-              )
+                  text: '$title',
+                  size: 12,
+                  weight: titleFontWeight,
+                  paddingBottom: 8,
+                  color: kBlackColor,
+                )
               : SizedBox(),
           DropdownButton2<String>(
             isExpanded: true,
@@ -50,22 +50,21 @@ class MyDropDown extends StatelessWidget {
                 color: kBlackColor,
               ),
             ),
-            items:
-                itemsList
-                    .map(
-                      (String item) => DropdownMenuItem<String>(
-                        value: item,
-                        child: Text(
-                          item.toString(),
-                          style: TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w400,
-                            color: kBlackColor,
-                          ),
-                        ),
+            items: itemsList
+                .map(
+                  (String item) => DropdownMenuItem<String>(
+                    value: item,
+                    child: Text(
+                      item.toString(),
+                      style: TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w400,
+                        color: kBlackColor,
                       ),
-                    )
-                    .toList(),
+                    ),
+                  ),
+                )
+                .toList(),
             value: selectedValue,
             onChanged: onChanged,
             iconStyleData: IconStyleData(

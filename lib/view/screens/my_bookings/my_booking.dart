@@ -28,7 +28,11 @@ class _MyBookingPageState extends State<MyBookingPage> {
   @override
   void initState() {
     super.initState();
-    _loadBookings();
+    // Load bookings after the first frame to avoid calling
+    // reactive updates while widgets are being built.
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _loadBookings();
+    });
   }
 
   void _loadBookings() {

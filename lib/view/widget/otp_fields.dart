@@ -32,8 +32,6 @@
 //   }
 // }
 
-
-
-// 
+//
 // intl_phone_field: ^3.2.0
 //   flutter_otp_text_field: ^1.1.1

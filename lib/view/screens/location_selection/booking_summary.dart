@@ -50,13 +50,11 @@ class _BookingSummaryPageState extends State<BookingSummaryPage> {
             subTitle: "Review your photoshoot details before confirming.",
           ),
           SizedBox(height: 15),
-
           Container(
             width: Get.width,
             margin: EdgeInsets.symmetric(horizontal: 20),
             padding: EdgeInsets.symmetric(horizontal: 27, vertical: 25),
             decoration: gradientShadow(),
-
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: List.generate(items.length, (index) {
@@ -68,7 +66,6 @@ class _BookingSummaryPageState extends State<BookingSummaryPage> {
               }),
             ),
           ),
-
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 20),
             child: MyButton(
@@ -123,7 +120,6 @@ class InfoWidget extends StatelessWidget {
         children: [
           CommonImageView(svgPath: icon),
           SizedBox(width: 15),
-
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

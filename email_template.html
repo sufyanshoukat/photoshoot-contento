@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Booking Notification</title>
+</head>
+
+<body
+    style="margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f4f4;">
+    <table role="presentation" cellpadding="0" cellspacing="0" style="width: 100%; background-color: #f4f4f4;">
+        <tr>
+            <td style="padding: 40px 20px;">
+                <table role="presentation" cellpadding="0" cellspacing="0"
+                    style="max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+
+                    <!-- Header -->
+                    <tr>
+                        <td
+                            style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 40px 30px; text-align: center;">
+                            <h1 style="margin: 0; color: #ffffff; font-size: 28px; font-weight: 700;">
+                                📸 New Photoshoot Booking
+                            </h1>
+                            <p style="margin: 10px 0 0 0; color: #ffffff; font-size: 14px; opacity: 0.95;">
+                                Contento Photography Services
+                            </p>
+                        </td>
+                    </tr>
+
+                    <!-- Booking Status Badge -->
+                    <tr>
+                        <td style="padding: 30px 30px 0 30px; text-align: center;">
+                            <div
+                                style="display: inline-block; background-color: #fbbf24; color: #78350f; padding: 8px 20px; border-radius: 20px; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">
+                                {{booking_status}}
+                            </div>
+                        </td>
+                    </tr>
+
+                    <!-- Booking Information -->
+                    <tr>
+                        <td style="padding: 30px;">
+                            <h2 style="margin: 0 0 20px 0; color: #1f2937; font-size: 20px; font-weight: 600;">
+                                Booking Details
+                            </h2>
+
+                            <!-- Booking ID -->
+                            <table role="presentation" cellpadding="0" cellspacing="0"
+                                style="width: 100%; margin-bottom: 20px;">
+                                <tr>
+                                    <td
+                                        style="padding: 15px; background-color: #f9fafb; border-left: 4px solid #667eea; border-radius: 6px;">
+                                        <p
+                                            style="margin: 0; color: #6b7280; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600;">
+                                            Booking ID</p>
+                                        <p
+                                            style="margin: 5px 0 0 0; color: #1f2937; font-size: 16px; font-weight: 600; font-family: 'Courier New', monospace;">
+                                            {{booking_id}}
+                                        </p>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <!-- Date and Time -->
+                            <table role="presentation" cellpadding="0" cellspacing="0"
+                                style="width: 100%; margin-bottom: 20px;">
+                                <tr>
+                                    <td style="width: 50%; padding-right: 10px;">
+                                        <div style="padding: 15px; background-color: #eff6ff; border-radius: 8px;">
+                                            <p style="margin: 0; color: #1e40af; font-size: 12px; font-weight: 600;">📅
+                                                DATE</p>
+                                            <p
+                                                style="margin: 8px 0 0 0; color: #1e3a8a; font-size: 14px; font-weight: 600;">
+                                                {{booking_date}}
+                                            </p>
+                                        </div>
+                                    </td>
+                                    <td style="width: 50%; padding-left: 10px;">
+                                        <div style="padding: 15px; background-color: #f0fdf4; border-radius: 8px;">
+                                            <p style="margin: 0; color: #166534; font-size: 12px; font-weight: 600;">🕐
+                                                TIME</p>
+                                            <p
+                                                style="margin: 8px 0 0 0; color: #14532d; font-size: 14px; font-weight: 600;">
+                                                {{booking_time}}
+                                            </p>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <!-- Divider -->
+                            <hr style="border: none; border-top: 1px solid #e5e7eb; margin: 30px 0;">
+
+                            <!-- Customer Information -->
+                            <h2 style="margin: 0 0 20px 0; color: #1f2937; font-size: 20px; font-weight: 600;">
+                                Customer Information
+                            </h2>
+
+                            <table role="presentation" cellpadding="0" cellspacing="0"
+                                style="width: 100%; margin-bottom: 15px;">
+                                <tr>
+                                    <td style="padding: 12px 0; border-bottom: 1px solid #f3f4f6;">
+                                        <table role="presentation" cellpadding="0" cellspacing="0" style="width: 100%;">
+                                            <tr>
+                                                <td
+                                                    style="width: 40%; color: #6b7280; font-size: 14px; font-weight: 500;">
+                                                    👤 Name</td>
+                                                <td style="color: #1f2937; font-size: 14px; font-weight: 600;">
+                                                    {{customer_name}}</td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 12px 0; border-bottom: 1px solid #f3f4f6;">
+                                        <table role="presentation" cellpadding="0" cellspacing="0" style="width: 100%;">
+                                            <tr>
+                                                <td
+                                                    style="width: 40%; color: #6b7280; font-size: 14px; font-weight: 500;">
+                                                    📧 Email</td>
+                                                <td style="color: #1f2937; font-size: 14px;">
+                                                    <a href="mailto:{{customer_email}}"
+                                                        style="color: #667eea; text-decoration: none;">{{customer_email}}</a>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 12px 0; border-bottom: 1px solid #f3f4f6;">
+                                        <table role="presentation" cellpadding="0" cellspacing="0" style="width: 100%;">
+                                            <tr>
+                                                <td
+                                                    style="width: 40%; color: #6b7280; font-size: 14px; font-weight: 500;">
+                                                    📱 Phone</td>
+                                                <td style="color: #1f2937; font-size: 14px; font-weight: 600;">
+                                                    {{customer_phone}}</td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <!-- Divider -->
+                            <hr style="border: none; border-top: 1px solid #e5e7eb; margin: 30px 0;">
+
+                            <!-- Location Information -->
+                            <h2 style="margin: 0 0 20px 0; color: #1f2937; font-size: 20px; font-weight: 600;">
+                                Location Details
+                            </h2>
+
+                            <div
+                                style="padding: 20px; background-color: #fef3c7; border-left: 4px solid #f59e0b; border-radius: 6px; margin-bottom: 20px;">
+                                <p
+                                    style="margin: 0; color: #92400e; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">
+                                    📍 LOCATION</p>
+                                <p style="margin: 8px 0 0 0; color: #78350f; font-size: 16px; font-weight: 700;">
+                                    {{location_name}}
+                                </p>
+                                <p style="margin: 5px 0 0 0; color: #92400e; font-size: 14px;">
+                                    {{location_address}}
+                                </p>
+                            </div>
+
+                            <!-- Additional Notes -->
+                            <div
+                                style="padding: 20px; background-color: #f3f4f6; border-radius: 8px; margin-bottom: 20px;">
+                                <p style="margin: 0 0 10px 0; color: #374151; font-size: 14px; font-weight: 600;">📝
+                                    Additional Notes:</p>
+                                <p style="margin: 0; color: #4b5563; font-size: 14px; line-height: 1.6;">
+                                    {{booking_notes}}
+                                </p>
+                            </div>
+
+                            <!-- Booking Created Time -->
+                            <p style="margin: 0; color: #9ca3af; font-size: 12px; text-align: center;">
+                                Booking created on {{booking_created}}
+                            </p>
+                        </td>
+                    </tr>
+
+                    <!-- Footer -->
+                    <tr>
+                        <td
+                            style="padding: 30px; background-color: #f9fafb; text-align: center; border-top: 1px solid #e5e7eb;">
+                            <p style="margin: 0 0 10px 0; color: #6b7280; font-size: 14px; font-weight: 600;">
+                                Contento Photography Services
+                            </p>
+                            <p style="margin: 0 0 5px 0; color: #9ca3af; font-size: 12px;">
+                                Creating memorable moments, one click at a time
+                            </p>
+                            <p style="margin: 10px 0 0 0; color: #9ca3af; font-size: 12px;">
+                                📧 <a href="mailto:tracy@mycontento.com"
+                                    style="color: #667eea; text-decoration: none;">tracy@mycontento.com</a>
+                            </p>
+                        </td>
+                    </tr>
+
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+
+</html>

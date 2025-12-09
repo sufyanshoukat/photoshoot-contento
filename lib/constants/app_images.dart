@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_single_quotes
 class Assets {
   Assets._();
-  
+
   /// Assets for imagesApple
   /// assets/images/apple.png
   static const String imagesApple = "assets/images/apple.png";
@@ -60,11 +60,13 @@ class Assets {
 
   /// Assets for imagesBookingSummaryAppBarLayout
   /// assets/images/booking_summary_app_bar_layout.png
-  static const String imagesBookingSummaryAppBarLayout = "assets/images/booking_summary_app_bar_layout.png";
+  static const String imagesBookingSummaryAppBarLayout =
+      "assets/images/booking_summary_app_bar_layout.png";
 
   /// Assets for imagesCalenderDtViewIcon
   /// assets/images/calender_dt_view_icon.svg
-  static const String imagesCalenderDtViewIcon = "assets/images/calender_dt_view_icon.svg";
+  static const String imagesCalenderDtViewIcon =
+      "assets/images/calender_dt_view_icon.svg";
 
   /// Assets for imagesCalenderIcon
   /// assets/images/calender_icon.svg
@@ -104,7 +106,8 @@ class Assets {
 
   /// Assets for imagesHomeAppBarLayout
   /// assets/images/home_app_bar_layout.png
-  static const String imagesHomeAppBarLayout = "assets/images/home_app_bar_layout.png";
+  static const String imagesHomeAppBarLayout =
+      "assets/images/home_app_bar_layout.png";
 
   /// Assets for imagesHomeB
   /// assets/images/home_b.svg
@@ -120,7 +123,8 @@ class Assets {
 
   /// Assets for imagesLocationScreenAppBarLayout
   /// assets/images/location_screen_app_bar_layout.png
-  static const String imagesLocationScreenAppBarLayout = "assets/images/location_screen_app_bar_layout.png";
+  static const String imagesLocationScreenAppBarLayout =
+      "assets/images/location_screen_app_bar_layout.png";
 
   /// Assets for imagesLogo
   /// assets/images/logo.png
@@ -132,11 +136,13 @@ class Assets {
 
   /// Assets for imagesMarkerLocationIcon
   /// assets/images/marker_location_icon.svg
-  static const String imagesMarkerLocationIcon = "assets/images/marker_location_icon.svg";
+  static const String imagesMarkerLocationIcon =
+      "assets/images/marker_location_icon.svg";
 
   /// Assets for imagesMyBookingsAppBarLayout
   /// assets/images/my_bookings_app_bar_layout.png
-  static const String imagesMyBookingsAppBarLayout = "assets/images/my_bookings_app_bar_layout.png";
+  static const String imagesMyBookingsAppBarLayout =
+      "assets/images/my_bookings_app_bar_layout.png";
 
   /// Assets for imagesOnboarding1
   /// assets/images/onboarding_1.png
@@ -156,11 +162,13 @@ class Assets {
 
   /// Assets for imagesProfileDefaultImage
   /// assets/images/profile_default_image.jpg
-  static const String imagesProfileDefaultImage = "assets/images/profile_default_image.jpg";
+  static const String imagesProfileDefaultImage =
+      "assets/images/profile_default_image.jpg";
 
   /// Assets for imagesRegisterAuthBk
   /// assets/images/register_auth_bk.png
-  static const String imagesRegisterAuthBk = "assets/images/register_auth_bk.png";
+  static const String imagesRegisterAuthBk =
+      "assets/images/register_auth_bk.png";
 
   /// Assets for imagesSA
   /// assets/images/s_a.svg
@@ -192,14 +200,15 @@ class Assets {
 
   /// Assets for imagesTermsAndConditionImage
   /// assets/images/terms_and_condition_image.png
-  static const String imagesTermsAndConditionImage = "assets/images/terms_and_condition_image.png";
+  static const String imagesTermsAndConditionImage =
+      "assets/images/terms_and_condition_image.png";
 
   /// Assets for imagesTimeSlotAppBarLayout
   /// assets/images/time_slot_app_bar_layout.png
-  static const String imagesTimeSlotAppBarLayout = "assets/images/time_slot_app_bar_layout.png";
+  static const String imagesTimeSlotAppBarLayout =
+      "assets/images/time_slot_app_bar_layout.png";
 
   /// Assets for imagesTrashIcon
   /// assets/images/trash_icon.svg
   static const String imagesTrashIcon = "assets/images/trash_icon.svg";
 }
-

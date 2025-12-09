@@ -24,7 +24,6 @@ class _ManageMemberShipPageState extends State<ManageMemberShipPage> {
         '3-6 Reels (optional)',
       ],
     ),
-
     OffersModel(
       title: "Content Concierge",
       price: "599",
@@ -36,7 +35,6 @@ class _ManageMemberShipPageState extends State<ManageMemberShipPage> {
         'Renews annually until cancelled',
       ],
     ),
-
     OffersModel(
       title: "Additional Shoot Members",
       price: "249",
@@ -47,7 +45,6 @@ class _ManageMemberShipPageState extends State<ManageMemberShipPage> {
         '3-6 Reels (optional)',
       ],
     ),
-
     OffersModel(
       title: "Quarterly Membership",
       price: "749",
@@ -59,7 +56,6 @@ class _ManageMemberShipPageState extends State<ManageMemberShipPage> {
         'Renews annually until cancelled',
       ],
     ),
-
     OffersModel(
       title: "Monthly Membership",
       price: "189",
@@ -84,7 +80,6 @@ class _ManageMemberShipPageState extends State<ManageMemberShipPage> {
             title: 'Manage Membership',
           ),
           SizedBox(height: 15),
-
           MyText(
             paddingBottom: 15,
             paddingLeft: 20,
@@ -93,7 +88,6 @@ class _ManageMemberShipPageState extends State<ManageMemberShipPage> {
             weight: FontWeight.w500,
             color: kBlackColor,
           ),
-
           Expanded(
             child: GridView.builder(
               shrinkWrap: true,
@@ -115,7 +109,6 @@ class _ManageMemberShipPageState extends State<ManageMemberShipPage> {
               },
             ),
           ),
-
           SizedBox(height: 20),
         ],
       ),

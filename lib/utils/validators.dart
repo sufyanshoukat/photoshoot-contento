@@ -1,4 +1,3 @@
-
 import 'package:contento/extension/validation.dart';
 
 class ValidationService {

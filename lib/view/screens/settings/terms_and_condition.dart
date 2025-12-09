@@ -25,9 +25,7 @@ class _TermsAndConditionPageState extends State<TermsAndConditionPage> {
               title: 'Terms & Conditions',
             ),
             SizedBox(height: 11),
-
             SizedBox(height: 16),
-
             Padding(
               padding: AppSizes.HORIZONTAL,
               child: Column(

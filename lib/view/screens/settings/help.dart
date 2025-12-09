@@ -22,9 +22,7 @@ class _HelpPageState extends State<HelpPage> {
           children: [
             GeneralAppBar(image: Assets.imagesAuthTopBk, title: 'Help Center'),
             SizedBox(height: 11),
-
             SizedBox(height: 16),
-
             Padding(
               padding: AppSizes.HORIZONTAL,
               child: Column(
