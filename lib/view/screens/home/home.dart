@@ -3,6 +3,10 @@ import 'package:contento/constants/app_images.dart';
 import 'package:contento/constants/app_sizes.dart';
 import 'package:contento/constants/app_styling.dart';
 import 'package:contento/controller/auth_controller.dart';
+import 'package:contento/controller/subscription_controller.dart';
+import 'package:contento/view/screens/booking/book_photoshoot_screen.dart';
+import 'package:contento/view/screens/membership/subscription_plans_screen.dart';
+import 'package:contento/view/screens/my_bookings/my_booking.dart';
 import 'package:contento/view/widget/common_image_view_widget.dart';
 import 'package:contento/view/widget/general_appbar.dart';
 import 'package:contento/view/widget/my_text_widget.dart';
@@ -18,6 +22,21 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final AuthController authController = Get.find<AuthController>();
+  final SubscriptionController subscriptionController =
+      Get.put(SubscriptionController());
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUserData();
+  }
+
+  void _loadUserData() {
+    final userId = authController.currentUser.value?.uid;
+    if (userId != null) {
+      subscriptionController.getCurrentSubscription(userId);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,12 +61,22 @@ class _HomePageState extends State<HomePage> {
                     isGradientStyle: true,
                     text: "Book Photoshoot",
                     icon: Assets.imagesHomeB,
-                    onTap: () {},
+                    onTap: () {
+                      // TODO: Enable subscription check when needed
+                      // if (subscriptionController.hasActiveSubscription) {
+                      //   Get.to(() => BookPhotoshootScreen());
+                      // } else {
+                      //   Get.to(() => SubscriptionPlansScreen());
+                      // }
+                      Get.to(() => BookPhotoshootScreen());
+                    },
                   ),
                   MyBtn(
                     text: "My Bookings",
                     icon: Assets.imagesHomeC,
-                    onTap: () {},
+                    onTap: () {
+                      Get.to(() => MyBookingPage());
+                    },
                   ),
                   MyBtn(
                     text: "Membership Details",
@@ -57,13 +86,14 @@ class _HomePageState extends State<HomePage> {
 
                   Spacer(flex: 2),
 
-                  MyText(
-                    paddingBottom: 20,
-                    text: "Next credit renewal: Oct 30, 2025",
-                    size: 15,
-                    weight: FontWeight.w500,
-                    color: kBlackColor,
-                  ),
+                  // TODO: Enable when subscription is active
+                  // MyText(
+                  //   paddingBottom: 20,
+                  //   text: "Next credit renewal: Oct 30, 2025",
+                  //   size: 15,
+                  //   weight: FontWeight.w500,
+                  //   color: kBlackColor,
+                  // ),
                 ],
               ),
             ),
@@ -123,39 +153,55 @@ class MemberShipCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 105,
-      width: Get.width,
-      decoration: AppStyling().gradientStyle1(),
-      child: InkWell(
-        onTap: () {},
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            CommonImageView(svgPath: Assets.imagesHomeA),
-            SizedBox(width: 10),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                MyText(
-                  text: "Monthly Membership",
-                  size: 22,
-                  weight: FontWeight.w400,
-                  color: kWhiteColor,
-                ),
-                MyText(
-                  text: "You have 2 credits left",
-                  size: 14,
-                  weight: FontWeight.w400,
-                  color: kWhiteColor,
-                ),
-              ],
-            ),
-          ],
+    final SubscriptionController subscriptionController =
+        Get.find<SubscriptionController>();
+
+    return Obx(() {
+      return Container(
+        height: 105,
+        width: Get.width,
+        decoration: AppStyling().gradientStyle1(),
+        child: InkWell(
+          onTap: () {
+            if (subscriptionController.hasActiveSubscription) {
+              Get.toNamed(
+                  '/membership-details'); // Navigate to membership details
+            } else {
+              Get.to(() => SubscriptionPlansScreen());
+            }
+          },
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              CommonImageView(svgPath: Assets.imagesHomeA),
+              SizedBox(width: 10),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  MyText(
+                    text: subscriptionController.hasActiveSubscription
+                        ? subscriptionController.subscriptionTypeName
+                        : "No Active Plan",
+                    size: 22,
+                    weight: FontWeight.w400,
+                    color: kWhiteColor,
+                  ),
+                  MyText(
+                    text: subscriptionController.hasActiveSubscription
+                        ? "You have ${subscriptionController.remainingCredits} credits left"
+                        : "Tap to choose a plan",
+                    size: 14,
+                    weight: FontWeight.w400,
+                    color: kWhiteColor,
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
-      ),
-    );
+      );
+    });
   }
 }

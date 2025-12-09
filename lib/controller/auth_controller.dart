@@ -5,6 +5,8 @@ import 'package:contento/services/firebase_auth.dart';
 import 'package:contento/services/firebase_crud.dart';
 import 'package:contento/utils/snackbars.dart';
 import 'package:contento/view/screens/auth/login.dart';
+import 'package:contento/view/screens/home/home.dart';
+// import 'package:contento/view/screens/membership/subscription_plans_screen.dart'; // TODO: Uncomment when subscription enabled
 import 'package:contento/view/screens/my_nav_bar/my_nav_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -74,6 +76,13 @@ class AuthController extends GetxController {
     if (firebaseUser != null) {
       await fetchUserData(firebaseUser.uid);
       if (currentUser.value != null) {
+        // Load subscription data
+        try {
+          Get.find<dynamic>();
+          // Note: We'll load subscription data when needed in individual screens
+        } catch (e) {
+          print("Loading subscription data later: $e");
+        }
         Get.offAll(() => MyNavBar());
       }
     }
@@ -250,8 +259,10 @@ class AuthController extends GetxController {
           // Clear fields
           clearSignUpFields();
 
-          // Navigate to home
-          Get.offAll(() => MyNavBar());
+          // TODO: Enable subscription for new users
+          // Navigate to subscription plans for new users (commented for now)
+          // Get.offAll(() => SubscriptionPlansScreen());
+          Get.offAll(() => HomePage());
         }
       }
     } catch (e) {

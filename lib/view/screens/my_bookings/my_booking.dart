@@ -2,8 +2,10 @@ import 'package:contento/constants/app_colors.dart';
 import 'package:contento/constants/app_images.dart';
 import 'package:contento/constants/app_sizes.dart';
 import 'package:contento/constants/app_styling.dart';
-import 'package:contento/view/screens/location_selection/date_time_slot.dart';
-import 'package:contento/view/widget/common_image_view_widget.dart';
+import 'package:contento/controller/booking_controller.dart';
+import 'package:contento/controller/auth_controller.dart';
+import 'package:contento/models/booking_model.dart';
+import 'package:contento/view/screens/booking/book_photoshoot_screen.dart';
 import 'package:contento/view/widget/general_appbar.dart';
 import 'package:contento/view/widget/my_button.dart';
 import 'package:contento/view/widget/my_text_widget.dart';
@@ -11,15 +13,31 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class MyBookingPage extends StatefulWidget {
-  bool haveBackButton;
-  MyBookingPage({super.key, this.haveBackButton = true});
+  final bool haveBackButton;
+  const MyBookingPage({super.key, this.haveBackButton = true});
 
   @override
   State<MyBookingPage> createState() => _MyBookingPageState();
 }
 
 class _MyBookingPageState extends State<MyBookingPage> {
+  final BookingController bookingController = Get.put(BookingController());
+  final AuthController authController = Get.find<AuthController>();
   int selectedIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadBookings();
+  }
+
+  void _loadBookings() {
+    final userId = authController.currentUser.value?.uid;
+    if (userId != null) {
+      bookingController.getUserBookings(userId);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -70,24 +88,82 @@ class _MyBookingPageState extends State<MyBookingPage> {
               ),
             ),
 
-            // --------- Upcoming Events -----------
-            selectedIndex == 0
-                ? Padding(
-                  padding: AppSizes.HORIZONTAL,
-                  child: Column(
-                    children: List.generate(10, (index) {
-                      return _EventCard(index: index);
-                    }),
-                  ),
-                )
-                : Padding(
-                  padding: AppSizes.HORIZONTAL,
-                  child: Column(
-                    children: List.generate(10, (index) {
-                      return _EventCard(index: index, isCompleted: true);
-                    }),
-                  ),
-                ),
+            // --------- Bookings List -----------
+            Padding(
+              padding: AppSizes.HORIZONTAL,
+              child: Obx(() {
+                List<BookingModel> bookingsToShow = selectedIndex == 0
+                    ? bookingController.upcomingBookings
+                    : bookingController.completedBookings;
+
+                if (bookingController.isLoading.value) {
+                  return SizedBox(
+                    height: 200,
+                    child: Center(child: CircularProgressIndicator()),
+                  );
+                }
+
+                if (bookingsToShow.isEmpty) {
+                  return SizedBox(
+                    height: 200,
+                    child: Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            selectedIndex == 0
+                                ? Icons.calendar_today
+                                : Icons.photo_camera,
+                            size: 48,
+                            color: kSecondaryColor.withOpacity(0.5),
+                          ),
+                          SizedBox(height: 16),
+                          MyText(
+                            text: selectedIndex == 0
+                                ? "No upcoming bookings"
+                                : "No completed sessions yet",
+                            size: 16,
+                            weight: FontWeight.w500,
+                            color: kSecondaryColor.withOpacity(0.7),
+                          ),
+                          SizedBox(height: 8),
+                          MyText(
+                            text: selectedIndex == 0
+                                ? "Book your first photoshoot!"
+                                : "Complete a session to see photos here",
+                            size: 14,
+                            weight: FontWeight.w400,
+                            color: kSecondaryColor.withOpacity(0.5),
+                          ),
+                          if (selectedIndex == 0) ...[
+                            SizedBox(height: 16),
+                            SizedBox(
+                              width: 160,
+                              child: MyButton(
+                                onTap: () =>
+                                    Get.to(() => BookPhotoshootScreen()),
+                                buttonText: "Book Photoshoot",
+                                fontColor: kWhiteColor,
+                                gradient1: kPrimaryColor,
+                                gradient2: kSecondaryColor,
+                                fontSize: 14,
+                              ),
+                            ),
+                          ],
+                        ],
+                      ),
+                    ),
+                  );
+                }
+
+                return Column(
+                  children: List.generate(bookingsToShow.length, (index) {
+                    final booking = bookingsToShow[index];
+                    return BookingCard(booking: booking, index: index);
+                  }),
+                );
+              }),
+            ),
 
             SizedBox(height: 50),
           ],
@@ -119,85 +195,100 @@ class _MyBookingPageState extends State<MyBookingPage> {
   }
 }
 
-class _EventCard extends StatelessWidget {
-  int index;
-  bool isCompleted;
-  _EventCard({super.key, required this.index, this.isCompleted = false});
+class BookingCard extends StatelessWidget {
+  final BookingModel booking;
+  final int index;
+
+  const BookingCard({super.key, required this.booking, required this.index});
 
   @override
   Widget build(BuildContext context) {
+    final BookingController bookingController = Get.find<BookingController>();
+
     return Container(
       margin: EdgeInsets.only(top: (index == 0) ? 12 : 10),
       padding: EdgeInsets.symmetric(horizontal: 17, vertical: 15),
       decoration: AppStyling().gradientStyle1(),
-      child: Row(
+      child: Column(
         children: [
-          CommonImageView(
-            height: 90,
-            radius: 10,
-            imagePath:
-                (index.isEven)
-                    ? Assets.imagesBeachPhoto
-                    : Assets.imagesStudioPhoto,
-          ),
-          SizedBox(width: 20),
-
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          Row(
             children: [
-              Container(
-                width: 80,
-                height: 25,
-                decoration: AppStyling().myDecoration(
-                  borderColor: kTransperentColor,
-                  color:
-                      (isCompleted)
-                          ? Color.fromARGB(255, 0, 133, 53)
-                          : Color(0xffADD3BC),
-
-                  radius: 5,
-                ),
-                child: Center(
-                  child: MyText(
-                    text: (isCompleted) ? "Completed" : "Confirmed",
-                    size: 11,
-                    weight: FontWeight.w700,
-                    color: (isCompleted) ? kWhiteColor : Color(0xff008526),
-                  ),
+              Icon(Icons.camera_alt, color: kWhiteColor, size: 24),
+              SizedBox(width: 15),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    MyText(
+                      text: "Photoshoot Session",
+                      size: 17,
+                      weight: FontWeight.w600,
+                      color: kWhiteColor,
+                    ),
+                    SizedBox(height: 5),
+                    MyText(
+                      text:
+                          "${bookingController.formatBookingDate(booking.bookingDate)} • ${booking.timeSlot}",
+                      size: 13,
+                      weight: FontWeight.w400,
+                      color: kWhiteColor,
+                    ),
+                    SizedBox(height: 2),
+                    MyText(
+                      text: "Status: ${booking.statusDisplayName}",
+                      size: 12,
+                      weight: FontWeight.w400,
+                      color: kWhiteColor.withOpacity(0.8),
+                    ),
+                  ],
                 ),
               ),
-
-              MyText(
-                paddingTop: 10,
-                text: (index.isEven) ? "Sat, Oct 25, 2025" : "Book Photoshoot",
-                size: 17,
-                weight: FontWeight.w600,
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                decoration: BoxDecoration(
+                  color: _getStatusColor(booking.status),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: MyText(
+                  text: booking.statusDisplayName.toUpperCase(),
+                  size: 10,
+                  weight: FontWeight.w600,
+                  color: kWhiteColor,
+                ),
+              ),
+            ],
+          ),
+          if (booking.notes.isNotEmpty) ...[
+            SizedBox(height: 10),
+            Container(
+              width: double.infinity,
+              padding: EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: kWhiteColor.withOpacity(0.1),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: MyText(
+                text: "Notes: ${booking.notes}",
+                size: 12,
+                weight: FontWeight.w400,
                 color: kWhiteColor,
               ),
-              MyText(
-                paddingBottom: 10,
-                text:
-                    (index.isEven)
-                        ? "Indoor. Studio Lightning"
-                        : "Indoor Lightning",
-                size: 14,
-                weight: FontWeight.w600,
-                color: kWhiteColor.withValues(alpha: 0.5),
-              ),
-
-              SizedBox(
-                width: 140,
-                child: MyButton(
-                  height: 33,
-                  onTap: () {
-                    Get.to(() => DateTimeSlot());
-                  },
-                  buttonText: "Cancel Booking",
-                  gradient1: Color(0xffFF5574),
-                  gradient2: Color(0xff993346),
-                  fontColor: kWhiteColor,
-                  fontSize: 12,
-                  fontWeight: FontWeight.w800,
+            ),
+          ],
+          SizedBox(height: 15),
+          Row(
+            children: [
+              Expanded(
+                child: SizedBox(
+                  height: 36,
+                  child: MyButton(
+                    onTap: () => Get.to(() => BookPhotoshootScreen()),
+                    buttonText: "Book Another",
+                    fontColor: kWhiteColor,
+                    gradient1: kPrimaryColor,
+                    gradient2: kSecondaryColor,
+                    fontSize: 13,
+                  ),
                 ),
               ),
             ],
@@ -206,9 +297,17 @@ class _EventCard extends StatelessWidget {
       ),
     );
   }
-}
 
-class ItemsModel {
-  String title, subTitle, icon;
-  ItemsModel({required this.title, required this.icon, required this.subTitle});
+  Color _getStatusColor(BookingStatus status) {
+    switch (status) {
+      case BookingStatus.pending:
+        return Colors.orange;
+      case BookingStatus.confirmed:
+        return kPrimaryColor;
+      case BookingStatus.completed:
+        return Colors.green;
+      case BookingStatus.cancelled:
+        return Colors.red;
+    }
+  }
 }
